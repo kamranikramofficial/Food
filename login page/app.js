@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
             password:user.password,
         }));
         alert('Registration successful! You are now logged in.');
-        window.location.href = 'index.html'; // Redirect to home page
+        window.location.href = '../singin page/index.html'; // Redirect to home page
     });
 
     let passwordInput = document.getElementById('password');

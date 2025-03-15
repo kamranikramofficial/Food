@@ -15,13 +15,13 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
           let users = JSON.parse(localStorage.getItem('currentUser')) || [];
-          let user = users.find(users => 
-            user.email === email && 
-            user.password === password &&
-            (user.fullName === name || user.name === name)
+          const foundUser = users.find(u => 
+            u.email === email && 
+            u.password === password &&
+            (u.fullName === name || u.name === name)
         );
         
-        if  (Array.isArray(users)){
+        if (user) {
             let userData = {
                 email: user.email,
                 name: user.fullName || user.name,

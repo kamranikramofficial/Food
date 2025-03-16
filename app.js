@@ -1148,12 +1148,13 @@ const recipes = [
         modal.style.display = "block"
     }
   })
+let allRecipes = [...recipes]; 
 let cuisineFilter = document.getElementById('cuisine-filter');
 let difficultyFilter = document.getElementById('difficulty-filter');
 let resetFiltersBtn = document.getElementById('reset-filters');
 function populateCuisineFilter() {
-    const cuisines = [...new Set(recipes.map(recipe => recipe.cuisine))].sort();
-        cuisines.forEach(cuisine => {
+    const cuisines = [...new Set(allRecipes.map(recipe => recipe.cuisine))].sort();
+    cuisines.forEach(cuisine => {
         const option = document.createElement('option');
         option.value = cuisine;
         option.textContent = cuisine;
@@ -1163,17 +1164,17 @@ function populateCuisineFilter() {
 function filterRecipes() {
     let selectedCuisine = cuisineFilter.value;
     let selectedDifficulty = difficultyFilter.value;
-    let filteredRecipes = recipes.filter(recipe => {
-    let matchesCuisine = selectedCuisine === '' || recipe.cuisine === selectedCuisine;
-    let matchesDifficulty = selectedDifficulty === '' || recipe.difficulty === selectedDifficulty;
-    return matchesCuisine && matchesDifficulty;
+        let filteredRecipes = allRecipes.filter(recipe => {
+        let matchesCuisine = selectedCuisine === '' || recipe.cuisine === selectedCuisine;
+        let matchesDifficulty = selectedDifficulty === '' || recipe.difficulty === selectedDifficulty;
+        return matchesCuisine && matchesDifficulty;
     });
     renderRecipes(filteredRecipes);
 }
 function resetFilters() {
     cuisineFilter.value = '';
     difficultyFilter.value = '';
-    renderRecipes(recipes);
+    renderRecipes(allRecipes); 
 }
 cuisineFilter.addEventListener('change', filterRecipes);
 difficultyFilter.addEventListener('change', filterRecipes);
@@ -1210,13 +1211,13 @@ function renderRecipes(recipesToRender) {
                     <button class="view-recipe-btn">View Recipe</button>
                 </div>
             `;
-            recipeCard.querySelector('.view-recipe-btn').addEventListener('click', function() {
-                showRecipeDetails(recipe);
-            });
-            main.appendChild(recipeCard);
+            recipeCard.querySelector(".view-recipe-btn").addEventListener("click", () => {
+                showRecipeDetails(recipe)
+              })
+             main.appendChild(recipeCard)
         });
     }
 }
-renderRecipes(recipes);
+renderRecipes(allRecipes);
   
   

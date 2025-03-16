@@ -7,6 +7,36 @@
     <title>Food Blog - Recipes & More</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        (function() {
+            const currentUser = localStorage.getItem('currentUser');
+            if (!currentUser) {
+                window.location.href = 'singin page/index.html';
+                return;
+            }
+            try {
+            const userData = JSON.parse(currentUser);
+                if (!userData || !userData.email) {
+                localStorage.removeItem('currentUser');
+                 window.location.href = 'singin page/index.html'; 
+                return;
+                }
+                console.log('User authenticated:', userData.name);
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Set user name in the welcome message
+                    const userNameElement = document.getElementById('user-name');
+                    if (userNameElement) {
+                        userNameElement.textContent = userData.name;
+                    }
+                });
+                
+            } catch (error) {
+                localStorage.removeItem('currentUser');
+                window.location.href = 'singin page/index.html'; 
+            }
+        })();
+    </script>
+
 </head>
 
 <body>

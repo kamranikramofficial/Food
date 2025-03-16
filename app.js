@@ -1020,6 +1020,12 @@ const recipes = [
       mealType: ["Beverage"],
     },
   ]
+
+
+
+
+
+
   document.addEventListener("DOMContentLoaded", () => {
     const currentUser = localStorage.getItem("currentUser")
     if (currentUser) {
@@ -1142,5 +1148,75 @@ const recipes = [
         modal.style.display = "block"
     }
   })
+let cuisineFilter = document.getElementById('cuisine-filter');
+let difficultyFilter = document.getElementById('difficulty-filter');
+let resetFiltersBtn = document.getElementById('reset-filters');
+function populateCuisineFilter() {
+    const cuisines = [...new Set(recipes.map(recipe => recipe.cuisine))].sort();
+        cuisines.forEach(cuisine => {
+        const option = document.createElement('option');
+        option.value = cuisine;
+        option.textContent = cuisine;
+        cuisineFilter.appendChild(option);
+    });
+}
+function filterRecipes() {
+    let selectedCuisine = cuisineFilter.value;
+    let selectedDifficulty = difficultyFilter.value;
+    let filteredRecipes = recipes.filter(recipe => {
+    let matchesCuisine = selectedCuisine === '' || recipe.cuisine === selectedCuisine;
+    let matchesDifficulty = selectedDifficulty === '' || recipe.difficulty === selectedDifficulty;
+    return matchesCuisine && matchesDifficulty;
+    });
+    renderRecipes(filteredRecipes);
+}
+function resetFilters() {
+    cuisineFilter.value = '';
+    difficultyFilter.value = '';
+    renderRecipes(recipes);
+}
+cuisineFilter.addEventListener('change', filterRecipes);
+difficultyFilter.addEventListener('change', filterRecipes);
+resetFiltersBtn.addEventListener('click', resetFilters);
+populateCuisineFilter();
+function renderRecipes(recipesToRender) {
+    let main = document.getElementById('main');
+    if (main) {
+        main.innerHTML = ''; 
+        if (recipesToRender.length === 0) {
+            main.innerHTML = `
+                <div class="no-results">
+                    <p>No recipes match your selected filters. Please try different criteria.</p>
+                </div>
+            `;
+            return;
+        }
+        recipesToRender.forEach(recipe => {
+            const recipeCard = document.createElement('div');
+            recipeCard.className = 'recipe-card';
+            recipeCard.innerHTML = `
+                <div class="recipe-image">
+                    <img src="${recipe.image}" alt="${recipe.name}">
+                </div>
+                <div class="recipe-info">
+                    <h3>${recipe.name}</h3>
+                    <p>Prep Time: ${recipe.prepTimeMinutes} minutes</p>
+                    <div class="rating">
+                        <p>Rating: ${recipe.rating} <i class="fas fa-star"></i> (${recipe.reviewCount} reviews)</p>
+                    </div>
+                    <div class="meal-type">
+                        <p>Meal Type: ${recipe.mealType.join(", ")}</p>
+                    </div>
+                    <button class="view-recipe-btn">View Recipe</button>
+                </div>
+            `;
+            recipeCard.querySelector('.view-recipe-btn').addEventListener('click', function() {
+                showRecipeDetails(recipe);
+            });
+            main.appendChild(recipeCard);
+        });
+    }
+}
+renderRecipes(recipes);
   
   

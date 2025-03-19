@@ -251,19 +251,26 @@ select:focus {
 /* Responsive Styles */
 @media (max-width: 1000px) {
     .container {
-        flex-direction: column;
+        flex-direction: column-reverse;
+        height: auto;
         width: 95%;
     }
 
     .image-container {
         min-height: 300px;
     }
+    .form-container {
+        overflow-y: none;
+        max-height: 50rem;
+    }
 }
 
 @media (max-width: 600px) {
     .form-container {
-        padding: 20px;
-    }
+            padding: 40px;
+            overflow-y: none;
+            max-height: 8000px;
+        }    
 
     .radio-group {
         flex-direction: column;

@@ -52,8 +52,6 @@ JavaScript (ES6, ES5)
 
 Front-end development
 
-UI/UX best practices
-
 #### 📫 How to reach me...
 You can connect with me via:  
 GitHub: [https://github.com/kamranikramofficial/]   
